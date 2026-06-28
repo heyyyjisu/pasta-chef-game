@@ -4,7 +4,7 @@ A word guessing game built with HTML, SCSS, and vanilla JavaScript. Same concept
 
 ## Screenshot
 
-![Pasta Chef gameplay](./assets/screenshot.png)
+![Pasta Chef gameplay](./assets/Screenshot.png)
 
 ## How to Play
 
