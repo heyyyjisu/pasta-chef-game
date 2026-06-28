@@ -119,11 +119,17 @@ function disableKey(letter, correct) {
 
 function createKeyboard() {
   const keys = "abcdefghijklmnopqrstuvwxyz";
+  let musicStarted = false;
+
   for (let i = 0; i < keys.length; i++) {
     const key = document.createElement("button");
     key.textContent = keys[i];
     key.addEventListener("click", function (e) {
       e.preventDefault();
+      if (!musicStarted) {
+        bgMusic.play();
+        musicStarted = true;
+      }
       guess = e.target.textContent;
       guessLetter(wordArr, guess);
     });
@@ -164,3 +170,7 @@ document.addEventListener("keydown", function (e) {
     guessLetter(wordArr, letter);
   }
 });
+
+const bgMusic = new Audio("./assets/pasta-chef-soundtrack.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 0.3;
