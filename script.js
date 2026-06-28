@@ -51,6 +51,9 @@ function addIngredients() {
   ing.textContent = gameIngredients[ingredientsCount];
   document.querySelector(".plate__ing").appendChild(ing);
 
+  const pantryItems = document.querySelectorAll(".pantry__item");
+  pantryItems[ingredientsCount].textContent = "";
+
   ingredientsCount += 1;
 }
 
@@ -72,11 +75,13 @@ function guessLetter(wordArr, guess) {
         wordArr.splice(i, 1);
         addIngredients();
         getWord();
+        disableKey(guess, true);
         break;
       }
     }
   } else {
     addAttempts();
+    disableKey(guess, false);
     console.log(wordArr);
     console.log(attemptsCount);
   }
@@ -86,6 +91,7 @@ function guessLetter(wordArr, guess) {
     document.querySelector(".modal").innerHTML = `<div class="modal__box">
     <div class="modal__emoji">💩🤌</div>
     <div class="modal__text">No pasta!</div>
+    <button class="modal__playAgain" onclick="resetGame()">Play again!</button>
   </div>`;
     document.querySelector(".modal").classList.add("active");
   }
@@ -95,9 +101,20 @@ function guessLetter(wordArr, guess) {
     document.querySelector(".modal").innerHTML = `<div class="modal__box">
     <div class="modal__emoji">🍝</div>
     <div class="modal__text">Your pasta is ready!</div>
+    <button class="modal__playAgain" onclick="resetGame()">Play again!</button>
   </div>`;
     document.querySelector(".modal").classList.add("active");
   }
+}
+
+function disableKey(letter, correct) {
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach((btn) => {
+    if (btn.textContent === letter) {
+      btn.disabled = true;
+      btn.classList.add(correct ? "correct" : "wrong");
+    }
+  });
 }
 
 function createKeyboard() {
@@ -114,5 +131,36 @@ function createKeyboard() {
   }
 }
 
+function resetGame() {
+  guess = "";
+  attemptsCount = 6;
+  ingredientsCount = 0;
+  guessedWord = new Set();
+  gameIngredients = [];
+
+  fetch("./example-words.json")
+    .then((res) => res.json())
+    .then((data) => {
+      word = data[Math.floor(Math.random() * data.length)];
+      wordSet = new Set(word);
+      wordArr = [...wordSet];
+      gameIngredients = ingredients.slice(0, wordArr.length);
+      getWord();
+      renderPantry();
+    });
+  document.querySelector(".plate__ing").innerHTML = "";
+  document.querySelector(".attempts").style.visibility = "hidden";
+  document.querySelector(".modal").classList.remove("active");
+  document.querySelector(".keyboard").innerHTML = "";
+  createKeyboard();
+}
+
 createKeyboard();
 getWord(wordArr);
+
+document.addEventListener("keydown", function (e) {
+  const letter = e.key.toLowerCase();
+  if (letter.length === 1 && letter >= "a" && letter <= "z") {
+    guessLetter(wordArr, letter);
+  }
+});
