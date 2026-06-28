@@ -1,52 +1,118 @@
 "use strict";
 
-const word = "apple";
-const wordSet = new Set(word);
-const wordArr = [...wordSet];
+const ingredients = ["🧄", "🧅", "🍅", "🧀", "🫒", "🌿"];
 
-console.log(wordSet);
+let word = "";
+let wordSet;
+let wordArr;
 
 let guess = "";
-let attempt = 0;
+let attemptsCount = 6;
+let ingredientsCount = 0;
+let guessedWord = new Set();
+let gameIngredients = [];
 
-function getWordLength(wordArr) {
+fetch("./example-words.json")
+  .then((res) => res.json())
+  .then((data) => {
+    word = data[Math.floor(Math.random() * data.length)];
+    wordSet = new Set(word);
+    wordArr = [...wordSet];
+    gameIngredients = ingredients.slice(0, wordArr.length);
+    getWord();
+    renderPantry();
+  });
+
+function getWord() {
   let underscore = "";
-  for (let i = 0; i < wordArr.length; i++) {
-    underscore += "<div>_</div>";
+  console.log(word);
+  for (let i = 0; i < word.length; i++) {
+    if (guessedWord.has(word[i])) {
+      underscore += `<div>${word[i]}</div>`;
+    } else {
+      underscore += "<div>_</div>";
+    }
   }
   document.querySelector(".word__underscore").innerHTML = underscore;
 }
 
+function renderPantry() {
+  let ing = "";
+  for (let i = 0; i < gameIngredients.length; i++) {
+    ing += `<div class="pantry__item">${gameIngredients[i]}</div>`;
+  }
+  document.querySelector(".pantry").innerHTML = ing;
+}
+
+function addIngredients() {
+  if (ingredientsCount >= ingredients.length) return;
+
+  const ing = document.createElement("div");
+  ing.textContent = gameIngredients[ingredientsCount];
+  document.querySelector(".plate__ing").appendChild(ing);
+
+  ingredientsCount += 1;
+}
+
+function addAttempts() {
+  if (attemptsCount <= 0) return;
+  attemptsCount -= 1;
+
+  let attempts = "";
+  attempts += `<div>attempts left: ${attemptsCount}</div>`;
+  document.querySelector(".attempts").innerHTML = attempts;
+  document.querySelector(".attempts").style.visibility = "visible";
+}
+
 function guessLetter(wordArr, guess) {
-  attempt += 1;
-  for (let i = 0; i < wordArr.length; i++) {
-    if (wordArr[i] === guess) {
-      wordArr.splice(i, 1);
-      break;
+  if (wordArr.includes(guess)) {
+    for (let i = 0; i < wordArr.length; i++) {
+      if (wordArr[i] === guess) {
+        guessedWord.add(guess);
+        wordArr.splice(i, 1);
+        addIngredients();
+        getWord();
+        break;
+      }
     }
+  } else {
+    addAttempts();
+    console.log(wordArr);
+    console.log(attemptsCount);
   }
-  console.log(wordArr);
-  console.log(attempt);
-  if (attempt >= 7) {
-    console.log(`done`);
+  if (attemptsCount <= 0) {
+    console.log(`Failed`);
+    attemptsCount = 6;
+    document.querySelector(".modal").innerHTML = `<div class="modal__box">
+    <div class="modal__emoji">💩🤌</div>
+    <div class="modal__text">No pasta!</div>
+  </div>`;
+    document.querySelector(".modal").classList.add("active");
   }
-  if (attempt < 7 && wordArr.length === 0) {
+  if (wordArr.length === 0) {
     console.log(`Win!`);
+    attemptsCount = 6;
+    document.querySelector(".modal").innerHTML = `<div class="modal__box">
+    <div class="modal__emoji">🍝</div>
+    <div class="modal__text">Your pasta is ready!</div>
+  </div>`;
+    document.querySelector(".modal").classList.add("active");
   }
 }
 
-getWordLength(wordArr);
-guess = "x";
-guessLetter(wordArr, guess);
-guess = "q";
-guessLetter(wordArr, guess);
-guess = "h";
-guessLetter(wordArr, guess);
-guess = "t";
-guessLetter(wordArr, guess);
-guess = "o";
-guessLetter(wordArr, guess);
-guess = "z";
-guessLetter(wordArr, guess);
-guess = "b";
-guessLetter(wordArr, guess);
+function createKeyboard() {
+  const keys = "abcdefghijklmnopqrstuvwxyz";
+  for (let i = 0; i < keys.length; i++) {
+    const key = document.createElement("button");
+    key.textContent = keys[i];
+    key.addEventListener("click", function (e) {
+      e.preventDefault();
+      guess = e.target.textContent;
+      guessLetter(wordArr, guess);
+    });
+    document.querySelector(".keyboard").appendChild(key);
+  }
+}
+
+createKeyboard();
+getWord(wordArr);

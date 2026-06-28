@@ -1,0 +1,61 @@
+@use "../partials/colors" as *;
+@use "../partials/fonts" as *;
+@use "../partials/variables" as *;
+
+.plate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  flex-shrink: 0;
+
+  &__base {
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+
+      @media (min-width: 768px) {
+        height: 150px;
+      }
+
+      @media (min-width: 1024px) {
+        height: 200px;
+      }
+    }
+  }
+
+  &__ing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    text-shadow: 0.5px 0.5px 1px #adadad;
+
+    div:nth-child(1) {
+      transform: translate(-50%, -50%) rotate(15deg);
+    }
+    div:nth-child(2) {
+      transform: translate(-50%, -50%) rotate(-10deg);
+    }
+    div:nth-child(3) {
+      transform: translate(-50%, -50%) rotate(20deg);
+    }
+    div:nth-child(4) {
+      transform: translate(-50%, -50%) rotate(-5deg);
+    }
+    div:nth-child(5) {
+      transform: translate(-50%, -50%) rotate(12deg);
+    }
+    div:nth-child(6) {
+      transform: translate(-50%, -50%) rotate(-18deg);
+    }
+  }
+}

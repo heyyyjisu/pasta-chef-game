@@ -1,0 +1,26 @@
+@use "../partials/colors" as *;
+@use "../partials/fonts" as *;
+@use "../partials/variables" as *;
+
+.header {
+  width: fit-content;
+  font-family: $font-accent;
+  font-weight: $font-weight-bold;
+  // border: 2px solid $color-3;
+  // background-color: $color-4;
+  // border-radius: 15px;
+  margin-top: 2rem;
+  z-index: 1;
+
+  h1 {
+    margin: 0;
+    padding: 1rem;
+    text-shadow: 1px 1px 0 $color-1;
+  }
+
+  &__heading {
+    z-index: 1;
+    color: $color-4;
+    font-size: 1.2rem;
+  }
+}

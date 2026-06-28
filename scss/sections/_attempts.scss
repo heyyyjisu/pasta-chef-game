@@ -1,0 +1,19 @@
+@use "../partials/colors" as *;
+@use "../partials/fonts" as *;
+@use "../partials/variables" as *;
+
+.attempts {
+  display: flex;
+  background-color: $color-4;
+  // border: 2px solid $color-3;
+  color: $color-1;
+  border-radius: 10px;
+  font-family: $font-main;
+  font-weight: $font-weight-regular;
+  font-size: 1rem;
+  width: fit-content;
+  padding: 0.5rem;
+  height: 1rem;
+  visibility: hidden;
+  z-index: 1;
+}

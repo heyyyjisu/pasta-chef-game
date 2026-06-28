@@ -1,0 +1,11 @@
+@use "../partials/colors" as *;
+@use "../partials/fonts" as *;
+@use "../partials/variables" as *;
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem;
+}

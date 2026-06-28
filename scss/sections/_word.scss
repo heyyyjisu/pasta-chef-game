@@ -1,0 +1,25 @@
+@use "../partials/colors" as *;
+@use "../partials/fonts" as *;
+@use "../partials/variables" as *;
+
+.word {
+  width: fit-content;
+  border: none;
+  background-color: $color-2;
+  margin-bottom: 3rem;
+  padding: 1rem;
+  border-radius: 15px;
+  border: 2px solid $color-3;
+  box-shadow: 3px 3px 0 $color-3;
+  z-index: 1;
+
+  &__underscore {
+    display: flex;
+    gap: 1rem;
+    color: $color-4;
+    font-family: $font-main;
+    font-weight: $font-weight-bold;
+    font-size: 2rem;
+    text-shadow: 1.5px 1.5px 0.5px $color-3;
+  }
+}

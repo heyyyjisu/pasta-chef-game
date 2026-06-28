@@ -1,0 +1,16 @@
+@use "../partials/colors" as *;
+@use "../partials/fonts" as *;
+@use "../partials/variables" as *;
+
+.pantry {
+  position: absolute;
+  left: 1rem;
+  background-color: $color-4;
+  border: 2px solid $color-3;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 $color-3;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
