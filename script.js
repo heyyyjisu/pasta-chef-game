@@ -1,6 +1,17 @@
 "use strict";
 
-const ingredients = ["🧄", "🧅", "🍅", "🧀", "🫒", "🌿"];
+const ingredients = [
+  "🧄",
+  "🧅",
+  "🍅",
+  "🧀",
+  "🫒",
+  "🌿",
+  "🍝",
+  "🍄",
+  "🧂",
+  "🌶️",
+];
 
 let word = "";
 let wordSet;
