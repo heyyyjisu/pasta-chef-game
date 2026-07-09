@@ -19,6 +19,7 @@ let wordArr;
 
 let guess = "";
 let attemptsCount = 11;
+let gameStatus = "playing";
 let ingredientsCount = 0;
 let guessedWord = new Set();
 let gameIngredients = [];
@@ -30,11 +31,10 @@ fetch("./example-words.json")
     wordSet = new Set(word);
     wordArr = [...wordSet];
     gameIngredients = ingredients.slice(0, wordArr.length);
-    getWord();
-    renderPantry();
+    render();
   });
 
-function getWord() {
+function render() {
   let underscore = "";
   console.log(word);
   for (let i = 0; i < word.length; i++) {
@@ -45,14 +45,34 @@ function getWord() {
     }
   }
   document.querySelector(".word__underscore").innerHTML = underscore;
-}
 
-function renderPantry() {
   let ing = "";
   for (let i = 0; i < gameIngredients.length; i++) {
     ing += `<div class="pantry__item">${gameIngredients[i]}</div>`;
   }
   document.querySelector(".pantry").innerHTML = ing;
+
+  if (gameStatus === "win") {
+    console.log(`Win!`);
+    attemptsCount = 6;
+    document.querySelector(".modal").innerHTML = `<div class="modal__box">
+    <div class="modal__emoji">🍝</div>
+    <div class="modal__text">Your pasta is ready!</div>
+    <button class="modal__playAgain" onclick="resetGame()">Play again!</button>
+  </div>`;
+    document.querySelector(".modal").classList.add("active");
+  }
+
+  if (gameStatus === "lose") {
+    console.log(`Failed`);
+    attemptsCount = 6;
+    document.querySelector(".modal").innerHTML = `<div class="modal__box">
+    <div class="modal__emoji">💩🤌</div>
+    <div class="modal__text">No pasta!</div>
+    <button class="modal__playAgain" onclick="resetGame()">Play again!</button>
+  </div>`;
+    document.querySelector(".modal").classList.add("active");
+  }
 }
 
 function addIngredients() {
@@ -85,7 +105,7 @@ function guessLetter(wordArr, guess) {
         guessedWord.add(guess);
         wordArr.splice(i, 1);
         addIngredients();
-        getWord();
+        render();
         disableKey(guess, true);
         break;
       }
@@ -97,24 +117,12 @@ function guessLetter(wordArr, guess) {
     console.log(attemptsCount);
   }
   if (attemptsCount <= 0) {
-    console.log(`Failed`);
-    attemptsCount = 6;
-    document.querySelector(".modal").innerHTML = `<div class="modal__box">
-    <div class="modal__emoji">💩🤌</div>
-    <div class="modal__text">No pasta!</div>
-    <button class="modal__playAgain" onclick="resetGame()">Play again!</button>
-  </div>`;
-    document.querySelector(".modal").classList.add("active");
+    gameStatus = "lose";
+    render();
   }
   if (wordArr.length === 0) {
-    console.log(`Win!`);
-    attemptsCount = 6;
-    document.querySelector(".modal").innerHTML = `<div class="modal__box">
-    <div class="modal__emoji">🍝</div>
-    <div class="modal__text">Your pasta is ready!</div>
-    <button class="modal__playAgain" onclick="resetGame()">Play again!</button>
-  </div>`;
-    document.querySelector(".modal").classList.add("active");
+    gameStatus = "win";
+    render();
   }
 }
 
@@ -149,6 +157,7 @@ function createKeyboard() {
 }
 
 function resetGame() {
+  gameStatus = "playing";
   guess = "";
   attemptsCount = 6;
   ingredientsCount = 0;
@@ -162,18 +171,16 @@ function resetGame() {
       wordSet = new Set(word);
       wordArr = [...wordSet];
       gameIngredients = ingredients.slice(0, wordArr.length);
-      getWord();
-      renderPantry();
+      render();
     });
   document.querySelector(".plate__ing").innerHTML = "";
   document.querySelector(".attempts").style.visibility = "hidden";
-  document.querySelector(".modal").classList.remove("active");
   document.querySelector(".keyboard").innerHTML = "";
   createKeyboard();
 }
 
 createKeyboard();
-getWord(wordArr);
+render();
 
 document.addEventListener("keydown", function (e) {
   const letter = e.key.toLowerCase();
