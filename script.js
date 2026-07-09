@@ -7,7 +7,7 @@ const ingredients = [
   "🧀",
   "🫒",
   "🌿",
-  "🍝",
+  "🍷",
   "🍄",
   "🧂",
   "🌶️",
@@ -18,7 +18,7 @@ let wordSet;
 let wordArr;
 
 let guess = "";
-let attemptsCount = 6;
+let attemptsCount = 11;
 let ingredientsCount = 0;
 let guessedWord = new Set();
 let gameIngredients = [];

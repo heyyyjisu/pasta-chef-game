@@ -61,6 +61,11 @@
     width: 420px;
   }
 }
+@media (min-width: 1440px) {
+  .plate__base {
+    width: 520px;
+  }
+}
 .plate__base img {
   width: 100%;
   height: auto;
@@ -74,6 +79,11 @@
 @media (min-width: 1024px) {
   .plate__base img {
     width: 420px;
+  }
+}
+@media (min-width: 1440px) {
+  .plate__base img {
+    width: 520px;
   }
 }
 .plate__ing {
@@ -118,6 +128,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  font-size: 1.2rem;
 }
 @media (min-width: 760px) {
   .pantry {
@@ -127,6 +138,13 @@
 @media (min-width: 1024px) {
   .pantry {
     left: 3rem;
+  }
+}
+@media (min-width: 1440px) {
+  .pantry {
+    left: 1rem;
+    font-size: 1.8rem;
+    gap: 1rem;
   }
 }
 .pantry__item {
@@ -166,7 +184,12 @@
 }
 @media (min-width: 1024px) {
   .keyboard {
-    max-width: 1000px;
+    max-width: 800px;
+  }
+}
+@media (min-width: 1440px) {
+  .keyboard {
+    max-width: 1100px;
   }
 }
 
@@ -237,6 +260,11 @@ html {
     font-size: 24px;
   }
 }
+@media (min-width: 1440px) {
+  html {
+    font-size: 30px;
+  }
+}
 
 body {
   max-width: 1440px;
@@ -270,6 +298,12 @@ body img.bg {
   body img.bg {
     left: 0;
     object-position: 80% center;
+  }
+}
+@media (min-width: 1440px) {
+  body img.bg {
+    left: 0;
+    object-position: 100% center;
   }
 }
 

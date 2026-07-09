@@ -21,6 +21,10 @@
       width: 420px;
     }
 
+    @media (min-width: 1440px) {
+      width: 520px;
+    }
+
     img {
       width: 100%;
       height: auto;
@@ -32,6 +36,10 @@
 
       @media (min-width: 1024px) {
         width: 420px;
+      }
+
+      @media (min-width: 1440px) {
+        width: 520px;
       }
     }
   }

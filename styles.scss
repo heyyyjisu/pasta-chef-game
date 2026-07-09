@@ -23,6 +23,10 @@ html {
   @media (min-width: 1280px) {
     font-size: 24px;
   }
+
+  @media (min-width: 1440px) {
+    font-size: 30px;
+  }
 }
 
 body {
@@ -55,6 +59,11 @@ body {
     @media (min-width: 1024px) {
       left: 0;
       object-position: 80% center;
+    }
+
+    @media (min-width: 1440px) {
+      left: 0;
+      object-position: 100% center;
     }
   }
 }
