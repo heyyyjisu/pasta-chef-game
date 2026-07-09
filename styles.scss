@@ -23,10 +23,6 @@ html {
   @media (min-width: 1280px) {
     font-size: 24px;
   }
-
-  @media (min-width: 1800px) {
-    font-size: 30px;
-  }
 }
 
 body {
@@ -60,11 +56,6 @@ body {
       left: 0;
       object-position: 80% center;
     }
-
-    @media (min-width: 1800px) {
-      left: 0;
-      object-position: 100% center;
-    }
   }
 }
 body::after {
@@ -96,6 +87,11 @@ button {
   @media (min-width: 1024px) {
     font-size: 2rem;
     width: 2rem;
+  }
+
+  @media (min-width: 2000px) {
+    font-size: 2.2rem;
+    width: 2.2rem;
   }
 }
 button.correct:disabled {
